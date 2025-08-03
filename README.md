@@ -19,3 +19,4 @@ This project offers a novel extention expanding the reach of **1inch Cross-chain
 - [1inch Cross-Chain SDK](https://github.com/1inch/cross-chain-sdk)
 - [Starknet Dev Docker](https://github.com/starknet-foundation/starknet-dev-docker/)
 - [Starknet Cryptographic Methods](https://docs.starknet.io/architecture/cryptography/#hash_functions)
+- [Starkli Book](https://book.starkli.rs/tutorials/starkli-101)

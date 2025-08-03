@@ -54,3 +54,4 @@ RUN ARCH=$(uname -m) && \
 WORKDIR /workspace
 
 COPY ./.keys/starknet.json /home/node/.keys/starknet.json
+COPY ./.accounts/sepolia.json /home/node/.accounts/sepolia.json
