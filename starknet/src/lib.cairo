@@ -8,13 +8,14 @@ pub trait IHelloStarknet<TContractState> {
     fn get_balance(self: @TContractState) -> felt252;
 
     fn hash_data(ref self: TContractState, input_data: Span<u256>) -> u256;
+    fn timelock(ref self: TContractState);
 }
 
 /// Simple contract for managing balance.
 #[starknet::contract]
 mod HelloStarknet {
     use starknet::storage::{StoragePointerReadAccess, StoragePointerWriteAccess};
-
+    use starknet::{get_block_info};
     use core::keccak::keccak_u256s_be_inputs;
     use core::integer;
 
@@ -54,6 +55,11 @@ mod HelloStarknet {
             let compatible_hash = u256 { low: reversed_high, high: reversed_low };
 
             compatible_hash
+        }
+
+        fn timelock(ref self: ContractState) {
+            let block_info = get_block_info().unbox();
+            let _current_block = block_info.block_number;
         }
     }
 }

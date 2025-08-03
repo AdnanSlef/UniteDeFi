@@ -6,8 +6,8 @@ export STARKNET_KEYSTORE="/home/node/.keys/starknet.json"
 export STARKNET_NETWORK="sepolia"
 
 scarb build
-
 export FILENAME="./target/dev/workspace_HelloStarknet.contract_class.json"
+
 starkli declare --watch $FILENAME
 export ADDRESS="$(starkli deploy --watch $(starkli class-hash $FILENAME) $(starkli to-cairo-string notanum) | tee /dev/tty | tail -n1)"
 starkli call $ADDRESS get_balance

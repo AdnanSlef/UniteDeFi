@@ -12,3 +12,5 @@ node@8bddbc77f615:/workspace$ starkli deploy --watch $(starkli class-hash ./targ
 node@8bddbc77f615:/workspace$ starkli call 0x05e667e04de9df8fe1011e50b8a802113744e8b1e046a19c7b1aa7e893a11ce4 get_balance
 node@8bddbc77f615:/workspace$ starkli invoke --watch 0x05e667e04de9df8fe1011e50b8a802113744e8b1e046a19c7b1aa7e893a11ce4 increase_balance 3
 ```
+
+From this point onward, I started using a deploy script, so please reference [script.sh](./script.sh).
