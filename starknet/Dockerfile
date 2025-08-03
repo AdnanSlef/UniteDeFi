@@ -52,3 +52,5 @@ RUN ARCH=$(uname -m) && \
     fi
 
 WORKDIR /workspace
+
+COPY ./.keys/starknet.json /home/node/.keys/starknet.json
