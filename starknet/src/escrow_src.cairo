@@ -155,6 +155,6 @@ mod escrow_src {
         }
 
         // Use keccak to match Solidity's bytes32 hash.
-        fn hash_secret(secret: Span<u256>) -> u256 { hash_data(secret) }
+        pub fn hash_secret(secret: Span<u256>) -> u256 { hash_data(secret) }
     }
 }

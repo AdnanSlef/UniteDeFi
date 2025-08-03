@@ -8,7 +8,7 @@ This project offers a novel extention expanding the reach of **1inch Cross-chain
 - Preserves hashlock and timelock functionality
 
 ## Transactions executed onchain:
-- Token transfers were executed on public testnet and the transactions recorded in [log.json](./transactions/log.json)
+- Token transfers were executed on public testnet and the transactions recorded in [log.txt](./transactions/log.txt)
 
 ## Bonus features:
 - User Interface (planned for future)

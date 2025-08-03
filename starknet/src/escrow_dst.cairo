@@ -150,7 +150,7 @@ mod escrow_dst {
             if a.dst.public_withdrawal != b.dst.public_withdrawal { return false; }
             true
         }
-
+        
         fn hash_secret(secret: Span<u256>) -> u256 { hash_data(secret) }
     }
 }
