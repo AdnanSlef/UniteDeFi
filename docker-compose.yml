@@ -1,0 +1,38 @@
+services:
+  evm:
+    build:
+      context: ./evm
+      dockerfile: Dockerfile
+    container_name: fusion_evm
+    working_dir: /workspace
+    volumes:
+      - ./evm:/workspace
+    env_file:
+      - ./evm/.env
+    command: ["bash", "-lc", "tail -f /dev/null"] # keep alive
+
+  starknet:
+    build:
+      context: ./starknet
+      dockerfile: Dockerfile
+    container_name: fusion_starknet
+    working_dir: /workspace
+    volumes:
+      - ./starknet:/workspace
+    env_file:
+      - ./starknet/.env
+    command: ["bash", "-lc", "tail -f /dev/null"] # keep alive
+
+  resolver:
+    build:
+      context: ./resolver
+      dockerfile: Dockerfile
+    container_name: fusion_resolver
+    working_dir: /app
+    env_file:
+      - ./resolver/.env
+    depends_on:
+      - evm
+      - starknet
+    command: ["python", "main.py"]
+
