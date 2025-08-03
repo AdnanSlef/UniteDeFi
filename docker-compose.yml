@@ -4,12 +4,10 @@ services:
       context: ./evm
       dockerfile: Dockerfile
     container_name: fusion_evm
-    working_dir: /workspace
-    volumes:
-      - ./evm:/workspace
+    working_dir: /app/cross-chain-resolver-example
     env_file:
       - ./evm/.env
-    command: ["bash", "-lc", "tail -f /dev/null"] # keep alive
+    command: ["../entrypoint.sh"] # keep alive
 
   starknet:
     build:
