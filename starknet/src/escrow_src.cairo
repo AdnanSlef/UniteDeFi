@@ -1,10 +1,10 @@
 mod escrow_src {
     use crate::timelock::{
-        Timelocks, Src, Dst,
+        Timelocks,
         src_withdrawal_start, src_cancellation_start, src_pub_cancellation_start,
     };
+    use crate::util::hash_data;
     use starknet::{ContractAddress, get_caller_address, get_block_timestamp};
-    use starknet::storage::{StoragePointerReadAccess, StoragePointerWriteAccess};
     use core::integer::u256;
 
     // --- Minimal ERC20 interface/dispatcher ---
@@ -21,7 +21,7 @@ mod escrow_src {
         pub token: ContractAddress,     // escrowed asset
         pub amount: u256,
         pub safety_deposit: u256,       // paid to caller on success/cancel
-        pub hashlock: felt252,          // expected hash(secret)
+        pub hashlock: u256,          // expected hash(secret)
     }
 
     #[starknet::contract]
@@ -29,7 +29,7 @@ mod escrow_src {
         use super::{
             Immutables, Timelocks, IERC20Dispatcher, IERC20DispatcherTrait,
             ContractAddress, get_caller_address, get_block_timestamp,
-            src_withdrawal_start, src_cancellation_start, src_pub_cancellation_start,
+            src_withdrawal_start, src_cancellation_start, src_pub_cancellation_start, hash_data
         };
         use starknet::storage::{StoragePointerReadAccess, StoragePointerWriteAccess};
         use core::integer::u256;
@@ -62,7 +62,7 @@ mod escrow_src {
 
         // withdraw(secret, immutables)
         #[external(v0)]
-        fn withdraw(ref self: ContractState, secret: felt252, imm: Immutables) {
+        fn withdraw(ref self: ContractState, secret: Span<u256>, imm: Immutables) {
             assert_valid_immutables(@self, imm);
             let caller = get_caller_address();
             _withdraw_to(ref self, secret, caller, imm);
@@ -70,7 +70,7 @@ mod escrow_src {
 
         // withdrawTo(secret, target, immutables)
         #[external(v0)]
-        fn withdraw_to(ref self: ContractState, secret: felt252, target: ContractAddress, imm: Immutables) {
+        fn withdraw_to(ref self: ContractState, secret: Span<u256>, target: ContractAddress, imm: Immutables) {
             assert_valid_immutables(@self, imm);
             _withdraw_to(ref self, secret, target, imm);
         }
@@ -101,7 +101,7 @@ mod escrow_src {
 
         // -------- internals --------
 
-        fn _withdraw_to(ref self: ContractState, secret: felt252, target: ContractAddress, imm: Immutables) {
+        fn _withdraw_to(ref self: ContractState, secret: Span<u256>, target: ContractAddress, imm: Immutables) {
             // only taker during private withdrawal
             require(get_caller_address() == imm.taker);
 
@@ -156,6 +156,6 @@ mod escrow_src {
         }
 
         // Replace with keccak if you must match Solidity's bytes32 hash.
-        fn hash_secret(secret: felt252) -> felt252 { secret }
+        fn hash_secret(secret: Span<u256>) -> u256 { hash_data(secret) }
     }
 }
