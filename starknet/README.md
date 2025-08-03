@@ -8,4 +8,5 @@ node@8bddbc77f615:/workspace$ export STARKNET_ACCOUNT="/home/node/.accounts/sepo
 node@8bddbc77f615:/workspace$ export STARKNET_KEYSTORE="/home/node/.keys/starknet.json"
 node@8bddbc77f615:/workspace$ export STARKNET_NETWORK="sepolia"
 node@8bddbc77f615:/workspace$ starkli declare --watch ./target/dev/workspace_HelloStarknet.contract_class.json
+node@8bddbc77f615:/workspace$ starkli deploy --watch $(starkli class-hash ./target/dev/workspace_HelloStarknet.contract_class.json) $(starkli to-cairo-string notanum)
 ```

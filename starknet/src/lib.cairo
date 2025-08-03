@@ -18,6 +18,11 @@ mod HelloStarknet {
         balance: felt252,
     }
 
+    #[constructor]
+    fn constructor(ref self: ContractState, _balance: felt252) {
+        self.balance.write(_balance);
+    }
+
     #[abi(embed_v0)]
     impl HelloStarknetImpl of super::IHelloStarknet<ContractState> {
         fn increase_balance(ref self: ContractState, amount: felt252) {
