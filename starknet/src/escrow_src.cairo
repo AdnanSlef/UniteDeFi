@@ -124,13 +124,12 @@ mod escrow_src {
         }
 
         // Compare provided immutables to stored (Solidity's onlyValidImmutables).
-        // NOTE: take `provided` BY VALUE to avoid snapshot drop issues.
         fn assert_valid_immutables(self: @ContractState, provided: Immutables) {
             let s = self.immutables.read();
             require(eq_immutables(s, provided));
         }
 
-        // Plain value equality (no snapshots).
+        // Plain value equality
         fn eq_immutables(a: Immutables, b: Immutables) -> bool {
             a.maker == b.maker
             && a.taker == b.taker
@@ -150,12 +149,12 @@ mod escrow_src {
             && a.dst.public_withdrawal == b.dst.public_withdrawal
         }
 
-        // simple require; panic without a message (keeps it portable)
+        // simple require; panic without a message
         fn require(ok: bool) {
             if !ok { panic!() }
         }
 
-        // Replace with keccak if you must match Solidity's bytes32 hash.
+        // Use keccak to match Solidity's bytes32 hash.
         fn hash_secret(secret: Span<u256>) -> u256 { hash_data(secret) }
     }
 }
